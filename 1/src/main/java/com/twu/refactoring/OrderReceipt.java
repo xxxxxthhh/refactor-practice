@@ -8,10 +8,10 @@ package com.twu.refactoring;
  * 
  */
 public class OrderReceipt {
-    private Order o;
+    private Order order;
 
-    public OrderReceipt(Order o) {
-        this.o = o;
+    public OrderReceipt(Order order) {
+        this.order = order;
 	}
 
 	public String printReceipt() {
@@ -22,25 +22,24 @@ public class OrderReceipt {
 
 		// print date, bill no, customer name
 //        output.append("Date - " + order.getDate();
-        output.append(o.getCustomerName());
-        output.append(o.getCustomerAddress());
+        output.append(order.getCustomerName());
+        output.append(order.getCustomerAddress());
 //        output.append(order.getCustomerLoyaltyNumber());
 
 		// prints lineItems
+		printsLineItems(output);
+		return output.toString();
+	}
+
+	private void printsLineItems(StringBuilder output) {
 		double totSalesTx = 0d;
 		double tot = 0d;
-		for (LineItem lineItem : o.getLineItems()) {
-			output.append(lineItem.getDescription());
-			output.append('\t');
-			output.append(lineItem.getPrice());
-			output.append('\t');
-			output.append(lineItem.getQuantity());
-			output.append('\t');
-			output.append(lineItem.totalAmount());
-			output.append('\n');
+		for (LineItem lineItem : order.getLineItems()) {
+			buildOutputDetail(output, lineItem);
 
+			double tax_rate = .10;
 			// calculate sales tax @ rate of 10%
-            double salesTax = lineItem.totalAmount() * .10;
+            double salesTax = lineItem.totalAmount() * tax_rate;
             totSalesTx += salesTax;
 
             // calculate total amount of lineItem = price * quantity + 10 % sales tax
@@ -50,8 +49,18 @@ public class OrderReceipt {
 		// prints the state tax
 		output.append("Sales Tax").append('\t').append(totSalesTx);
 
-        // print total amount
+		// print total amount
 		output.append("Total Amount").append('\t').append(tot);
-		return output.toString();
+	}
+
+	private void buildOutputDetail(StringBuilder output, LineItem lineItem) {
+		output.append(lineItem.getDescription());
+		output.append('\t');
+		output.append(lineItem.getPrice());
+		output.append('\t');
+		output.append(lineItem.getQuantity());
+		output.append('\t');
+		output.append(lineItem.totalAmount());
+		output.append('\n');
 	}
 }
