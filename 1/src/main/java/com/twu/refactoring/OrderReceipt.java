@@ -17,8 +17,9 @@ public class OrderReceipt {
 	public String printReceipt() {
 		StringBuilder output = new StringBuilder();
 
-		// print headers
-		output.append("======Printing Orders======\n");
+		String HEAD = "======Printing Orders======\n";
+
+		output.append(HEAD);
 
 		// print date, bill no, customer name
 //        output.append("Date - " + order.getDate();
