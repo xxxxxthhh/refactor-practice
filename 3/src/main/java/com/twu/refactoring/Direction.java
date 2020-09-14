@@ -10,6 +10,9 @@ public class Direction {
     public Direction turnRight() {
         return getDirection('E', 'W');
     }
+    public Direction turnLeft() {
+        return getDirection('W', 'E');
+    }
 
     private Direction getDirection(char e, char w) {
         switch (direction) {
@@ -26,9 +29,7 @@ public class Direction {
         }
     }
 
-    public Direction turnLeft() {
-        return getDirection('W', 'E');
-    }
+
 
     @Override
     public boolean equals(Object o) {
